@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ArticleDao">
+    <insert id="insert" parameterType="com.baizhi.entity.Article">
+        insert into t_article values (#{id},#{title},#{imgPath},#{content},#{publishDate},#{guru_id})
+    </insert>
+
+    <select id="queryOne" resultType="com.baizhi.entity.Article" parameterType="String">
+        select id,title,imgPath,content,publishDate  from t_article where id=#{id}
+    </select>
+
+    <delete id="delete" parameterType="String">
+        delete from t_article where id=#{id}
+    </delete>
+
+    <update id="update" parameterType="com.baizhi.entity.Article">
+        update t_article set title=#{title},imgPath=#{imgPath},content=#{content},publishDate=#{publishDate} where id=#{id}
+    </update>
+
+    <select id="queryByPage" resultType="com.baizhi.entity.Article">
+        select  id,title,imgPath,content,publishDate  from t_article limit #{start},#{rows}
+    </select>
+
+    <select id="queryTotals" resultType="long">
+       select count(id) from t_article
+    </select>
+
+    <delete id="deleteAll" parameterType="String">
+        delete from t_article where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+
+    </delete>
+
+
+</mapper>

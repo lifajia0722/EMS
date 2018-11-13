@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.BannerDao">
+
+    <insert id="insert" parameterType="com.baizhi.entity.Banner">
+        insert into t_banner values (#{id},#{title},#{imgPath},#{descend},#{status},#{date})
+    </insert>
+
+    <select id="queryOne" resultType="com.baizhi.entity.Banner" parameterType="String">
+        select id,title,imgPath,descend,status,date from t_banner where id=#{id}
+    </select>
+
+    <delete id="delete" parameterType="String">
+        delete from t_banner where id=#{id}
+    </delete>
+
+    <update id="update" parameterType="com.baizhi.entity.Banner">
+        update t_banner set title=#{title},imgPath=#{imgPath},descend=#{descend},status=#{status},date=#{date} where id=#{id}
+    </update>
+
+    <select id="queryByPage" resultType="com.baizhi.entity.Banner">
+        select id,title,imgPath,descend,status,date from t_banner limit #{start},#{rows}
+    </select>
+
+    <select id="queryTotals" resultType="long">
+       select count(id) from t_banner
+    </select>
+
+    <delete id="deleteAll" parameterType="String">
+        delete from t_banner where id in
+            <foreach collection="ids" item="id" open="(" separator="," close=")">
+              #{id}
+            </foreach>
+
+    </delete>
+
+</mapper>
